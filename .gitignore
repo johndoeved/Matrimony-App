@@ -1,0 +1,9 @@
+*.mp4
+node_modules/
+.env
+.env.production
+backend-api/node_modules/
+website/node_modules/
+website/.next/
+mobile-app/build/
+.DS_Store

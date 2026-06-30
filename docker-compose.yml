@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend-api:
+    build:
+      context: ./backend-api
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend-api/.env.production
+    environment:
+      - NODE_ENV=production
+      - CORS_ORIGIN=https://dhobimatrimony.com
+    restart: unless-stopped
+
+  website:
+    build:
+      context: ./website
+      dockerfile: Dockerfile
+    ports:
+      - "80:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
