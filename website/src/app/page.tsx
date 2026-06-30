@@ -68,20 +68,18 @@ export default function Home() {
         {/* Image Area (Right on Desktop, Bottom on Mobile) */}
         <div className="relative md:absolute md:top-0 md:bottom-0 md:right-0 w-full h-[400px] sm:h-[450px] md:h-full md:w-[55%] z-0 overflow-hidden bg-white">
           <div 
-            className="absolute inset-0 w-full h-full bg-cover bg-no-repeat"
+            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
             style={{ 
               backgroundImage: "url('/images/hands_bg.jpeg')",
-              backgroundPosition: "center center",
-              backgroundSize: "cover"
             }}
           />
           
-          {/* White convex curve overlay on the left edge of the image to recreate the laptop mockup curve */}
-          <div className="hidden md:block absolute top-1/2 -left-[20%] w-[40%] h-[150%] bg-white rounded-full -translate-y-1/2 z-10 shadow-[5px_0_15px_rgba(0,0,0,0.1)]"></div>
+          {/* White convex curve overlay with GOLD border on the left edge of the image */}
+          <div className="hidden md:block absolute top-[-25%] bottom-[-25%] left-[-20%] w-[40%] bg-white rounded-[50%] border-r-[4px] border-[#D4AF37] z-10 shadow-xl"></div>
           
-          {/* Top Right Pink Accent Swoosh (Mockup accurate leaf shape) */}
-          <svg className="hidden md:block absolute top-0 right-0 w-48 h-48 lg:w-64 lg:h-64 text-[#a51a49] z-20 drop-shadow-lg" viewBox="0 0 100 100" preserveAspectRatio="none" fill="currentColor">
-            <path d="M100,0 L100,100 Q40,100 0,0 Z" />
+          {/* Top Right Pink Accent Swoosh (Mockup accurate leaf shape pointing inwards) */}
+          <svg className="hidden md:block absolute top-0 right-0 w-40 h-40 lg:w-56 lg:h-56 text-[#a51a49] z-20 drop-shadow-xl" viewBox="0 0 100 100" preserveAspectRatio="none" fill="currentColor">
+            <path d="M100,0 L100,80 Q50,80 30,30 Q20,0 0,0 Z" />
           </svg>
         </div>
 
