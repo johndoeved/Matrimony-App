@@ -101,6 +101,24 @@ export class AuthService {
     return { success: true };
   }
 
+  async resetPassword(emailOrPhone: string, otp: string, newPassword: string) {
+    const storedOtp = this.otpStore.get(emailOrPhone);
+    if (!storedOtp || storedOtp !== otp) {
+      throw new UnauthorizedException('Invalid or expired OTP');
+    }
+    this.otpStore.delete(emailOrPhone); 
+    
+    // Hash new password
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+    const updatedUser = await this.usersService.updatePassword(emailOrPhone, passwordHash);
+    
+    if (!updatedUser) {
+      throw new UnauthorizedException('User not found');
+    }
+    
+    return { success: true, message: 'Password updated successfully' };
+  }
+
   async validateUser(emailOrPhone: string, pass: string): Promise<any> {
     const user = await this.usersService.findByEmailOrPhone(emailOrPhone);
     if (

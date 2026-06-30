@@ -15,4 +15,12 @@ export class UsersService {
     const createdUser = new this.userModel(userData);
     return createdUser.save();
   }
+
+  async updatePassword(emailOrPhone: string, passwordHash: string): Promise<UserDocument | null> {
+    return this.userModel.findOneAndUpdate(
+      { emailOrPhone },
+      { passwordHash },
+      { new: true }
+    ).exec();
+  }
 }
