@@ -16,10 +16,16 @@ export default function LoginPage() {
       const res = await fetch('http://localhost:5000/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ emailOrPhone, password })
+        body: JSON.stringify({ 
+          emailOrPhone: emailOrPhone.trim(), 
+          password: password.trim() 
+        })
       });
       
-      if (!res.ok) throw new Error('Invalid credentials');
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Invalid credentials');
+      }
       
       const data = await res.json();
       localStorage.setItem('token', data.access_token);
