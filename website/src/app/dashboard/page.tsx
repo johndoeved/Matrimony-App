@@ -41,10 +41,16 @@ export default function UserDashboard() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 mt-8">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-rose-50">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-rose-50 flex flex-col items-start">
             <h3 className="font-bold text-gray-800 text-lg mb-2">Profile Status</h3>
             <span className="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold">Pending Verification</span>
-            <p className="text-sm text-gray-500 mt-4">Please upload your Aadhaar card to get verified and start matching.</p>
+            <p className="text-sm text-gray-500 mt-4 mb-4">Please upload your Aadhaar card and complete your demographic details to start matching.</p>
+            <button 
+              onClick={() => router.push('/dashboard/setup')}
+              className="mt-auto px-4 py-2 bg-[#a51a49] text-white rounded-lg text-sm font-bold shadow hover:bg-[#851339] transition"
+            >
+              Complete Setup
+            </button>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-sm border border-rose-50">
             <h3 className="font-bold text-gray-800 text-lg mb-2">My Matches</h3>
