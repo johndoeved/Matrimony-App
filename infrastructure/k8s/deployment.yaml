@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dhobi-backend-deployment
+  labels:
+    app: dhobi-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dhobi-backend
+  template:
+    metadata:
+      labels:
+        app: dhobi-backend
+    spec:
+      containers:
+      - name: backend-api
+        image: johndoeved/dhobi-backend:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: NODE_ENV
+          value: "production"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dhobi-website-deployment
+  labels:
+    app: dhobi-website
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dhobi-website
+  template:
+    metadata:
+      labels:
+        app: dhobi-website
+    spec:
+      containers:
+      - name: website
+        image: johndoeved/dhobi-website:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
