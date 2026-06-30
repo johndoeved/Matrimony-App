@@ -48,7 +48,7 @@ export default function LoginPage() {
               <input 
                 type="text" 
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#a51a49] focus:border-transparent outline-none"
+                className="w-full px-4 py-3 text-gray-900 placeholder-gray-400 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#a51a49] focus:border-transparent outline-none"
                 placeholder="Enter email or phone"
                 value={emailOrPhone}
                 onChange={e => setEmailOrPhone(e.target.value)}
@@ -59,7 +59,7 @@ export default function LoginPage() {
               <input 
                 type="password" 
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#a51a49] focus:border-transparent outline-none"
+                className="w-full px-4 py-3 text-gray-900 placeholder-gray-400 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#a51a49] focus:border-transparent outline-none"
                 placeholder="Enter password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
