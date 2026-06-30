@@ -2,60 +2,50 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FiCheckCircle, FiHeart, FiLock } from "react-icons/fi";
+import { FiCheckCircle, FiUsers, FiLock } from "react-icons/fi";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white flex flex-col font-sans overflow-hidden">
       {/* Navigation Bar */}
-      <nav className="flex justify-between items-center px-4 md:px-12 py-4 bg-white shadow-sm relative z-50">
-        <div className="flex items-center gap-2 cursor-pointer">
+      <nav className="flex justify-between items-center px-4 md:px-16 py-3 bg-white z-50 relative">
+        <div className="flex items-center gap-3 cursor-pointer">
           <Image
             src="/images/logo.jpeg"
             alt="Dhobi Matrimony Logo"
-            width={50}
-            height={50}
-            className="rounded-xl shadow-sm object-cover"
+            width={45}
+            height={45}
+            className="rounded-lg object-cover"
           />
           <div className="flex flex-col leading-tight">
-            <span className="text-rose-800 font-serif font-bold text-xl md:text-2xl tracking-wider">
+            <span className="text-[#a51a49] font-serif font-bold text-xl tracking-wide">
               DHOBI
             </span>
-            <span className="text-yellow-600 font-serif text-xs md:text-sm tracking-[0.2em]">
+            <span className="text-[#d4af37] font-serif text-[10px] tracking-[0.3em] font-medium">
               MATRIMONY
             </span>
           </div>
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-10 text-sm font-medium text-gray-700">
-          <Link href="/" className="hover:text-rose-600 transition">
-            Home
-          </Link>
-          <Link href="#" className="hover:text-rose-600 transition">
-            Search
-          </Link>
-          <Link href="#" className="hover:text-rose-600 transition">
-            Premium
-          </Link>
-          <Link href="#" className="hover:text-rose-600 transition">
-            Success Stories
-          </Link>
-          <Link href="#" className="hover:text-rose-600 transition">
-            Contact Us
-          </Link>
+        <div className="hidden md:flex items-center gap-8 text-[13px] font-semibold text-gray-700">
+          <Link href="/" className="hover:text-[#a51a49] transition">Home</Link>
+          <Link href="#" className="hover:text-[#a51a49] transition">Search</Link>
+          <Link href="#" className="hover:text-[#a51a49] transition">Premium</Link>
+          <Link href="#" className="hover:text-[#a51a49] transition">Success Stories</Link>
+          <Link href="#" className="hover:text-[#a51a49] transition">Contact Us</Link>
         </div>
 
         {/* Auth Buttons */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <Link href="/admin/dashboard">
-            <button className="hidden sm:block px-6 py-2 rounded-full border border-rose-600 text-rose-600 text-sm font-semibold hover:bg-rose-50 transition">
+            <button className="hidden sm:block px-6 py-1.5 rounded-full border border-[#a51a49] text-[#a51a49] text-[13px] font-bold hover:bg-rose-50 transition">
               Login
             </button>
           </Link>
           <button
-            onClick={() => alert("Welcome! Please open the Flutter Mobile App to create your profile and start swiping.")}
-            className="px-6 py-2 rounded-full bg-rose-700 text-white text-sm font-semibold hover:bg-rose-800 transition shadow-md"
+            onClick={() => alert("Please download the mobile app to register!")}
+            className="px-6 py-1.5 rounded-full bg-[#a51a49] text-white text-[13px] font-bold hover:bg-[#851339] transition shadow-sm"
           >
             Register
           </button>
@@ -63,79 +53,78 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <main className="flex-1 flex flex-col md:flex-row relative">
-        {/* Left Side (White) */}
-        <div className="w-full md:w-7/12 bg-white flex flex-col justify-center px-8 md:px-16 lg:px-24 py-16 md:py-20 relative z-10">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-rose-700 leading-tight mb-4">
+      <main className="flex-1 flex relative">
+        
+        {/* Right Side Image (placed first in DOM so it sits behind the left side curve) */}
+        <div className="absolute top-0 bottom-0 right-0 w-1/2 md:w-[60%] lg:w-[55%] z-0 h-full overflow-hidden">
+          {/* We use the layout mockup image, positioned to show the hands at the top */}
+          <div 
+            className="absolute inset-0 w-full h-full bg-cover bg-no-repeat"
+            style={{ 
+              backgroundImage: "url('/images/layout_mockup.jpeg')",
+              backgroundPosition: "center 15%",
+              backgroundSize: "cover"
+            }}
+          />
+          {/* Top Right Pink Accent Curve */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#a51a49] rounded-bl-full shadow-lg opacity-90 transform translate-x-12 -translate-y-12"></div>
+        </div>
+
+        {/* Left Side (White content area with curved right border) */}
+        <div className="relative z-10 w-full md:w-[65%] lg:w-[55%] flex flex-col justify-center px-8 md:px-16 lg:px-24 py-12 md:py-20">
+          
+          {/* Massive white circle to create the convex curve cutting into the right image */}
+          <div className="hidden md:block absolute top-1/2 -right-[15%] w-[120%] h-[150%] bg-white rounded-full -translate-y-1/2 -z-10 shadow-[10px_0_30px_rgba(0,0,0,0.05)]"></div>
+          {/* White background for the left rect area */}
+          <div className="hidden md:block absolute top-0 bottom-0 left-0 w-full bg-white -z-10"></div>
+
+          <h1 className="text-[40px] md:text-[50px] lg:text-[56px] font-bold text-[#a51a49] leading-[1.1] mb-5 tracking-tight relative z-20">
             Find Your <br />
             Perfect Life Partner
           </h1>
-          <p className="text-gray-600 text-base md:text-lg mb-8 max-w-md font-medium">
-            India&apos;s most trusted Dhobi Matrimony service for your happy future.
+          <p className="text-gray-700 text-sm md:text-[15px] mb-8 max-w-sm font-medium leading-relaxed relative z-20">
+            India&apos;s most trusted Dhobi Matrimony<br/>service for your happy future.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 mb-16">
+          <div className="flex gap-4 mb-16 relative z-20">
             <button
               onClick={() => alert("Please download the mobile app to register!")}
-              className="px-8 py-3 bg-rose-700 text-white rounded-full font-bold text-sm md:text-base hover:bg-rose-800 transition shadow-lg w-fit"
+              className="px-8 py-2.5 bg-[#a51a49] text-white rounded-full font-bold text-[13px] hover:bg-[#851339] transition shadow-md"
             >
               Register Free
             </button>
             <button
               onClick={() => alert("Please download the mobile app to search!")}
-              className="px-8 py-3 bg-white text-rose-700 rounded-full font-bold text-sm md:text-base border border-rose-600 hover:bg-rose-50 transition shadow-md w-fit"
+              className="px-8 py-2.5 bg-white text-[#a51a49] rounded-full font-bold text-[13px] border border-[#a51a49] hover:bg-rose-50 transition shadow-md"
             >
               Search Now
             </button>
           </div>
 
           {/* Trust Badges */}
-          <div className="flex flex-wrap gap-8 md:gap-12 text-sm font-semibold text-gray-800">
+          <div className="flex gap-8 md:gap-12 relative z-20">
             <div className="flex items-center gap-3">
-              <div className="p-2 border border-rose-200 rounded-full bg-rose-50 text-rose-600">
-                <FiCheckCircle size={20} />
+              <div className="w-10 h-10 flex items-center justify-center border-2 border-[#a51a49] rounded-full bg-white text-[#a51a49]">
+                <FiCheckCircle size={18} strokeWidth={2.5} />
               </div>
-              <span className="max-w-[80px]">100% Verified Profiles</span>
+              <span className="text-[12px] font-bold text-[#a51a49] leading-tight">100% Verified<br/>Profiles</span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="p-2 border border-rose-200 rounded-full bg-rose-50 text-rose-600">
-                <FiHeart size={20} />
+              <div className="w-10 h-10 flex items-center justify-center border-2 border-[#a51a49] rounded-full bg-white text-[#a51a49]">
+                <FiUsers size={18} strokeWidth={2.5} />
               </div>
-              <span className="max-w-[80px]">Trusted by Thousands</span>
+              <span className="text-[12px] font-bold text-[#a51a49] leading-tight">Trusted by<br/>Thousands</span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="p-2 border border-rose-200 rounded-full bg-rose-50 text-rose-600">
-                <FiLock size={20} />
+              <div className="w-10 h-10 flex items-center justify-center border-2 border-[#a51a49] rounded-full bg-white text-[#a51a49]">
+                <FiLock size={18} strokeWidth={2.5} />
               </div>
-              <span className="max-w-[80px]">Privacy Assured</span>
+              <span className="text-[12px] font-bold text-[#a51a49] leading-tight">Privacy<br/>Assured</span>
             </div>
           </div>
         </div>
 
-        {/* Right Side (Gradient / Background) */}
-        {/* We use a custom clip-path to create the beautiful curved intersection between white and maroon */}
-        <div className="hidden md:block w-7/12 absolute top-0 bottom-0 right-0 z-0 bg-gradient-to-br from-rose-700 via-rose-800 to-rose-950" style={{ clipPath: 'ellipse(70% 80% at 85% 50%)' }}>
-          {/* Decorative Pattern overlay */}
-          <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')] mix-blend-overlay"></div>
-          
-          <div className="absolute top-1/4 left-1/4 text-white text-3xl font-serif font-light leading-snug drop-shadow-lg opacity-90 max-w-sm">
-            Two hearts united, <br />
-            <span className="font-bold">A LOVE STORY BEGINS,</span> <br />
-            forever entwined
-          </div>
-        </div>
       </main>
-
-      {/* Footer Banner */}
-      <div className="bg-rose-900 text-white flex flex-col md:flex-row items-center justify-between px-8 py-3 z-50 text-sm font-medium">
-        <div className="bg-white text-rose-900 px-4 py-1 rounded-full font-bold shadow mb-3 md:mb-0">
-          Free Register now
-        </div>
-        <div className="flex items-center gap-6">
-          <span>📞 +91 9959195396</span>
-          <a href="https://www.dhobimatrimony.com" className="hover:underline">www.dhobimatrimony.com</a>
-        </div>
-      </div>
     </div>
   );
 }
