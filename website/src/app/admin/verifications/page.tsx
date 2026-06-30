@@ -1,8 +1,14 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+interface PendingProfile {
+  _id: string;
+  gender: string;
+  location?: { city?: string };
+}
+
 export default function AdminVerifications() {
-  const [pending, setPending] = useState([]);
+  const [pending, setPending] = useState<PendingProfile[]>([]);
 
   useEffect(() => {
     fetch('http://localhost:5000/profiles/pending')
@@ -13,7 +19,7 @@ export default function AdminVerifications() {
 
   const handleAction = async (id: string, action: 'approve' | 'reject') => {
     await fetch(`http://localhost:5000/profiles/${id}/${action}`, { method: 'PATCH' });
-    setPending(pending.filter((p: any) => p._id !== id));
+    setPending(pending.filter((p) => p._id !== id));
   };
 
   return (
@@ -35,7 +41,7 @@ export default function AdminVerifications() {
             {pending.length === 0 && (
               <tr><td colSpan={5} className="px-6 py-12 text-center text-gray-500">No pending profiles found!</td></tr>
             )}
-            {pending.map((p: any) => (
+            {pending.map((p) => (
               <tr key={p._id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{p._id.substring(0,8)}...</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">{p.gender}</td>
