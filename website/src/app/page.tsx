@@ -17,12 +17,12 @@ export default function Home() {
         
         {/* Right Side Image (placed first in DOM so it sits behind the left side curve) */}
         <div className="absolute top-0 bottom-0 right-0 w-1/2 md:w-[60%] lg:w-[55%] z-0 h-full overflow-hidden">
-          {/* We use the layout mockup image, positioned to show the hands at the top */}
+          {/* We use the cleanly cropped hands image */}
           <div 
             className="absolute inset-0 w-full h-full bg-cover bg-no-repeat"
             style={{ 
-              backgroundImage: "url('/images/layout_mockup.jpeg')",
-              backgroundPosition: "center 15%",
+              backgroundImage: "url('/images/hands_bg.jpeg')",
+              backgroundPosition: "center center",
               backgroundSize: "cover"
             }}
           />
