@@ -15,13 +15,22 @@ export class NotificationsService {
         this.initialized = true;
       }
     } catch (e) {
-      console.warn('Firebase Admin SDK not initialized. Please add serviceAccountKey.json.');
+      console.warn(
+        'Firebase Admin SDK not initialized. Please add serviceAccountKey.json.',
+      );
     }
   }
 
-  async sendPushNotification(fcmToken: string, title: string, body: string, data?: any) {
+  async sendPushNotification(
+    fcmToken: string,
+    title: string,
+    body: string,
+    data?: any,
+  ) {
     if (!this.initialized) {
-      console.log(`[Mock Push Notification] To: ${fcmToken} | Title: ${title} | Body: ${body}`);
+      console.log(
+        `[Mock Push Notification] To: ${fcmToken} | Title: ${title} | Body: ${body}`,
+      );
       return;
     }
 

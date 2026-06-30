@@ -8,7 +8,7 @@ import { User, UserDocument } from '../users/schemas/user.schema';
 export class ProfilesService {
   constructor(
     @InjectModel(Profile.name) private profileModel: Model<ProfileDocument>,
-    @InjectModel(User.name) private userModel: Model<UserDocument>
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
   async createProfile(data: any): Promise<ProfileDocument> {
@@ -17,7 +17,7 @@ export class ProfilesService {
       const dob = new Date(data.dateOfBirth);
       const diff = Date.now() - dob.getTime();
       const age = new Date(diff).getUTCFullYear() - 1970;
-      
+
       const gender = (data.gender || '').toLowerCase();
       if (gender === 'female' && age < 18) {
         throw new BadRequestException('Minimum age for women is 18.');
@@ -34,24 +34,40 @@ export class ProfilesService {
   }
 
   async findPending(): Promise<UserDocument[]> {
-    return this.userModel.find({ accountStatus: 'pending' }).populate('profileId').exec();
+    return this.userModel
+      .find({ accountStatus: 'pending' })
+      .populate('profileId')
+      .exec();
   }
 
-  async updateStatus(userId: string, status: string): Promise<UserDocument | null> {
-    return this.userModel.findByIdAndUpdate(userId, { accountStatus: status }, { new: true }).exec();
+  async updateStatus(
+    userId: string,
+    status: string,
+  ): Promise<UserDocument | null> {
+    return this.userModel
+      .findByIdAndUpdate(userId, { accountStatus: status }, { new: true })
+      .exec();
   }
 
-  async findMatches(filters?: { caste?: string; religion?: string; minAge?: string; maxAge?: string }): Promise<ProfileDocument[]> {
-    const approvedUsers = await this.userModel.find({ accountStatus: 'approved' }).select('_id').exec();
-    const userIds = approvedUsers.map(u => u._id);
-    
+  async findMatches(filters?: {
+    caste?: string;
+    religion?: string;
+    minAge?: string;
+    maxAge?: string;
+  }): Promise<ProfileDocument[]> {
+    const approvedUsers = await this.userModel
+      .find({ accountStatus: 'approved' })
+      .select('_id')
+      .exec();
+    const userIds = approvedUsers.map((u) => u._id);
+
     // 2. Matchmaking Algorithm: Filter by caste, religion, age
-    let query: any = { user: { $in: userIds } };
-    
+    const query: any = { user: { $in: userIds } };
+
     if (filters?.caste) {
       query.caste = new RegExp(filters.caste, 'i');
     }
-    
+
     if (filters?.religion) {
       query.religion = new RegExp(filters.religion, 'i');
     }
@@ -59,17 +75,18 @@ export class ProfilesService {
     if (filters?.minAge || filters?.maxAge) {
       const minAge = parseInt(filters.minAge || '18', 10);
       const maxAge = parseInt(filters.maxAge || '100', 10);
-      
+
       const maxDate = new Date();
       maxDate.setFullYear(maxDate.getFullYear() - minAge);
-      
+
       const minDate = new Date();
       minDate.setFullYear(minDate.getFullYear() - maxAge);
-      
+
       query.dateOfBirth = { $gte: minDate, $lte: maxDate };
     }
 
-    return this.profileModel.find(query)
+    return this.profileModel
+      .find(query)
       .populate('user', 'emailOrPhone isVerified accountStatus')
       .exec();
   }

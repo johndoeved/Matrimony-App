@@ -1,4 +1,11 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, UnauthorizedException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -16,14 +23,17 @@ export class AuthController {
   }
 
   @Post('verify-otp')
-  async verifyOtp(@Body() body: { emailOrPhone: string, otp: string }) {
+  async verifyOtp(@Body() body: { emailOrPhone: string; otp: string }) {
     return this.authService.verifyOtp(body.emailOrPhone, body.otp);
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Body() loginDto: Record<string, string>) {
-    const user = await this.authService.validateUser(loginDto.emailOrPhone, loginDto.password);
+    const user = await this.authService.validateUser(
+      loginDto.emailOrPhone,
+      loginDto.password,
+    );
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }

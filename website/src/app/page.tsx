@@ -1,4 +1,4 @@
-import Image from 'next/image';
+
 
 export default function Home() {
   return (
@@ -26,7 +26,7 @@ export default function Home() {
           Find Your Perfect Life Partner
         </h2>
         <p className="text-lg md:text-2xl text-rose-800 italic max-w-2xl mb-12 font-medium">
-          "Two hearts united, a love story begins, forever entwined"
+          &quot;Two hearts united, a love story begins, forever entwined&quot;
         </p>
 
         <div className="flex flex-col sm:flex-row gap-6">

@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Patch, Body, Post, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Body,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ProfilesService } from './profiles.service';
 
 @Controller('profiles')
@@ -14,7 +22,7 @@ export class ProfilesController {
   getPendingProfiles() {
     return this.profilesService.findPending();
   }
-  
+
   @Get('matches')
   getMatches(
     @Query('caste') caste?: string,
@@ -22,7 +30,12 @@ export class ProfilesController {
     @Query('minAge') minAge?: string,
     @Query('maxAge') maxAge?: string,
   ) {
-    return this.profilesService.findMatches({ caste, religion, minAge, maxAge });
+    return this.profilesService.findMatches({
+      caste,
+      religion,
+      minAge,
+      maxAge,
+    });
   }
 
   @Get('stats')
@@ -30,12 +43,12 @@ export class ProfilesController {
     // Return analytical stats for the Web Admin Portal
     const pending = await this.profilesService.findPending();
     const approved = await this.profilesService.findMatches();
-    
+
     return {
       totalUsers: pending.length + approved.length,
       pendingApprovals: pending.length,
       approvedProfiles: approved.length,
-      premiumRevenue: (approved.length * 999) + 2499, // Mock analytical data
+      premiumRevenue: approved.length * 999 + 2499, // Mock analytical data
     };
   }
 
@@ -44,7 +57,7 @@ export class ProfilesController {
   async exportProfiles() {
     // In a real app, verify Super Admin JWT claim here.
     const matches = await this.profilesService.findMatches(); // get all approved
-    
+
     // Convert JSON to mock CSV format
     let csv = 'User ID,Gender,Religion,City\n';
     matches.forEach((p: any) => {

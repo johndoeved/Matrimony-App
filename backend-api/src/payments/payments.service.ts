@@ -14,12 +14,15 @@ export class PaymentsService {
       amount: amount,
       currency: 'INR',
       status: 'created',
-      userId
+      userId,
     };
   }
 
   async verifyPayment(orderId: string, paymentId: string, signature: string) {
     // Simulate signature verification
-    return { success: true, message: 'Payment verified successfully. User is now Premium.' };
+    return {
+      success: true,
+      message: 'Payment verified successfully. User is now Premium.',
+    };
   }
 }

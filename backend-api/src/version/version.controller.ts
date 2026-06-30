@@ -9,7 +9,8 @@ export class VersionController {
       minVersion: '1.0.0',
       updateUrl: 'https://dhobimatrimony.com/download/app-v1.0.1.apk',
       forceUpdate: false,
-      releaseNotes: '🚀 Added new Real-time Chat features!\n✨ Improved Matchmaking Algorithm.\n🐞 Bug fixes for older devices.'
+      releaseNotes:
+        '🚀 Added new Real-time Chat features!\n✨ Improved Matchmaking Algorithm.\n🐞 Bug fixes for older devices.',
     };
   }
 }

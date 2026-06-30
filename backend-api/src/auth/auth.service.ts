@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -11,7 +15,7 @@ export class AuthService {
 
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
   async generateOtp(emailOrPhone: string): Promise<{ message: string }> {
@@ -37,10 +41,17 @@ export class AuthService {
       return { message: 'OTP sent via Email' };
     } else {
       // Route via WhatsApp if requested (Checks for + prefix or just uses Twilio fallback)
-      if (process.env.TWILIO_WHATSAPP_NUMBER && process.env.TWILIO_ACCOUNT_SID) {
+      if (
+        process.env.TWILIO_WHATSAPP_NUMBER &&
+        process.env.TWILIO_ACCOUNT_SID
+      ) {
         const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${process.env.TWILIO_ACCOUNT_SID}/Messages.json`;
-        const authHeader = 'Basic ' + Buffer.from(`${process.env.TWILIO_ACCOUNT_SID}:${process.env.TWILIO_AUTH_TOKEN}`).toString('base64');
-        
+        const authHeader =
+          'Basic ' +
+          Buffer.from(
+            `${process.env.TWILIO_ACCOUNT_SID}:${process.env.TWILIO_AUTH_TOKEN}`,
+          ).toString('base64');
+
         try {
           await axios.post(
             twilioUrl,
@@ -49,7 +60,12 @@ export class AuthService {
               From: process.env.TWILIO_WHATSAPP_NUMBER,
               Body: `Your Dhobi Matrimony verification code is ${otp}. Please do not share this with anyone.`,
             }),
-            { headers: { Authorization: authHeader, 'Content-Type': 'application/x-www-form-urlencoded' } }
+            {
+              headers: {
+                Authorization: authHeader,
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+            },
           );
           return { message: 'OTP sent via WhatsApp' };
         } catch (e) {
@@ -67,7 +83,7 @@ export class AuthService {
             language: 'english',
             flash: 0,
             numbers: emailOrPhone,
-          }
+          },
         });
         return { message: 'OTP sent via SMS' };
       } else {
@@ -87,7 +103,11 @@ export class AuthService {
 
   async validateUser(emailOrPhone: string, pass: string): Promise<any> {
     const user = await this.usersService.findByEmailOrPhone(emailOrPhone);
-    if (user && user.passwordHash && await bcrypt.compare(pass, user.passwordHash)) {
+    if (
+      user &&
+      user.passwordHash &&
+      (await bcrypt.compare(pass, user.passwordHash))
+    ) {
       const { passwordHash, ...result } = user.toObject();
       return result;
     }
@@ -95,15 +115,21 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { emailOrPhone: user.emailOrPhone, sub: user._id, role: user.role };
+    const payload = {
+      emailOrPhone: user.emailOrPhone,
+      sub: user._id,
+      role: user.role,
+    };
     return {
       access_token: this.jwtService.sign(payload),
-      user
+      user,
     };
   }
 
   async register(data: any) {
-    const existing = await this.usersService.findByEmailOrPhone(data.emailOrPhone);
+    const existing = await this.usersService.findByEmailOrPhone(
+      data.emailOrPhone,
+    );
     if (existing) {
       throw new ConflictException('User already exists');
     }
@@ -112,9 +138,9 @@ export class AuthService {
       emailOrPhone: data.emailOrPhone,
       passwordHash,
       role: 'user',
-      accountStatus: 'pending'
+      accountStatus: 'pending',
     });
-    
+
     return this.login(newUser);
   }
 }

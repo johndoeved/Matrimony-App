@@ -38,11 +38,17 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('sendMessage')
   handleMessage(
-    @MessageBody() data: { senderId: string; receiverId: string; text: string; timestamp: Date },
+    @MessageBody()
+    data: {
+      senderId: string;
+      receiverId: string;
+      text: string;
+      timestamp: Date;
+    },
     @ConnectedSocket() client: Socket,
   ) {
     const receiverSocketId = this.connectedUsers.get(data.receiverId);
-    
+
     // Broadcast to the specific user's socket
     if (receiverSocketId) {
       this.server.to(receiverSocketId).emit('receiveMessage', data);
@@ -54,7 +60,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       'MOCK_FCM_TOKEN_' + data.receiverId,
       'New Message',
       data.text,
-      { senderId: data.senderId }
+      { senderId: data.senderId },
     );
 
     return { status: 'sent' };

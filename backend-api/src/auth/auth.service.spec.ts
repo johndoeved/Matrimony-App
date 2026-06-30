@@ -39,9 +39,13 @@ describe('AuthService', () => {
     // Just testing it mounts properly since actual OTP was mocked in earlier phases
     expect(service).toBeDefined();
   });
-  
+
   it('should issue a JWT with role claims', async () => {
-    const token = await service.login({ emailOrPhone: 'admin', password: 'password', role: 'admin' } as any);
+    const token = await service.login({
+      emailOrPhone: 'admin',
+      password: 'password',
+      role: 'admin',
+    } as any);
     expect(token).toEqual({ access_token: 'mock-jwt-token' });
   });
 });
