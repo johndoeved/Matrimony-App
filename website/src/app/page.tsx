@@ -1,70 +1,141 @@
+"use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import { FiCheckCircle, FiHeart, FiLock } from "react-icons/fi";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-rose-50 flex flex-col font-sans">
-      {/* Header */}
-      <header className="bg-rose-900 text-white py-4 px-8 flex justify-between items-center shadow-md">
-        <div className="flex items-center gap-3">
-          {/* Logo Placeholder */}
-          <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-xl text-rose-900 border-2 border-yellow-300 shadow-inner">
-            DM
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold tracking-wider text-yellow-400">DHOBI MATRIMONY</h1>
-            <p className="text-xs italic text-rose-200">Tradition • Trust • Togetherness</p>
+    <div className="min-h-screen bg-white flex flex-col font-sans overflow-hidden">
+      {/* Navigation Bar */}
+      <nav className="flex justify-between items-center px-4 md:px-12 py-4 bg-white shadow-sm relative z-50">
+        <div className="flex items-center gap-2 cursor-pointer">
+          <Image
+            src="/images/logo.jpeg"
+            alt="Dhobi Matrimony Logo"
+            width={50}
+            height={50}
+            className="rounded-xl shadow-sm object-cover"
+          />
+          <div className="flex flex-col leading-tight">
+            <span className="text-rose-800 font-serif font-bold text-xl md:text-2xl tracking-wider">
+              DHOBI
+            </span>
+            <span className="text-yellow-600 font-serif text-xs md:text-sm tracking-[0.2em]">
+              MATRIMONY
+            </span>
           </div>
         </div>
-      </header>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-6 lg:gap-10 text-sm font-medium text-gray-700">
+          <Link href="/" className="hover:text-rose-600 transition">
+            Home
+          </Link>
+          <Link href="#" className="hover:text-rose-600 transition">
+            Search
+          </Link>
+          <Link href="#" className="hover:text-rose-600 transition">
+            Premium
+          </Link>
+          <Link href="#" className="hover:text-rose-600 transition">
+            Success Stories
+          </Link>
+          <Link href="#" className="hover:text-rose-600 transition">
+            Contact Us
+          </Link>
+        </div>
+
+        {/* Auth Buttons */}
+        <div className="flex items-center gap-3">
+          <Link href="/admin/dashboard">
+            <button className="hidden sm:block px-6 py-2 rounded-full border border-rose-600 text-rose-600 text-sm font-semibold hover:bg-rose-50 transition">
+              Login
+            </button>
+          </Link>
+          <button
+            onClick={() => alert("Welcome! Please open the Flutter Mobile App to create your profile and start swiping.")}
+            className="px-6 py-2 rounded-full bg-rose-700 text-white text-sm font-semibold hover:bg-rose-800 transition shadow-md"
+          >
+            Register
+          </button>
+        </div>
+      </nav>
 
       {/* Hero Section */}
-      <main className="flex-1 flex flex-col items-center justify-center text-center px-4 py-20 relative overflow-hidden">
-        {/* Background gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-rose-100 via-rose-50 to-rose-200 -z-10"></div>
-        
-        <h2 className="text-4xl md:text-6xl font-extrabold text-rose-900 mb-6 drop-shadow-sm">
-          Find Your Perfect Life Partner
-        </h2>
-        <p className="text-lg md:text-2xl text-rose-800 italic max-w-2xl mb-12 font-medium">
-          &quot;Two hearts united, a love story begins, forever entwined&quot;
-        </p>
+      <main className="flex-1 flex flex-col md:flex-row relative">
+        {/* Left Side (White) */}
+        <div className="w-full md:w-7/12 bg-white flex flex-col justify-center px-8 md:px-16 lg:px-24 py-16 md:py-20 relative z-10">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-rose-700 leading-tight mb-4">
+            Find Your <br />
+            Perfect Life Partner
+          </h1>
+          <p className="text-gray-600 text-base md:text-lg mb-8 max-w-md font-medium">
+            India&apos;s most trusted Dhobi Matrimony service for your happy future.
+          </p>
 
-        <div className="flex flex-col sm:flex-row gap-6">
-          <button className="px-10 py-4 bg-rose-700 text-white rounded-full font-bold text-lg hover:bg-rose-800 transition shadow-xl transform hover:-translate-y-1">
-            Create Profile
-          </button>
-          <button className="px-10 py-4 bg-white text-rose-700 rounded-full font-bold text-lg hover:bg-rose-50 transition shadow-xl border-2 border-rose-200 transform hover:-translate-y-1">
-            Login
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4 mb-16">
+            <button
+              onClick={() => alert("Please download the mobile app to register!")}
+              className="px-8 py-3 bg-rose-700 text-white rounded-full font-bold text-sm md:text-base hover:bg-rose-800 transition shadow-lg w-fit"
+            >
+              Register Free
+            </button>
+            <button
+              onClick={() => alert("Please download the mobile app to search!")}
+              className="px-8 py-3 bg-white text-rose-700 rounded-full font-bold text-sm md:text-base border border-rose-600 hover:bg-rose-50 transition shadow-md w-fit"
+            >
+              Search Now
+            </button>
+          </div>
+
+          {/* Trust Badges */}
+          <div className="flex flex-wrap gap-8 md:gap-12 text-sm font-semibold text-gray-800">
+            <div className="flex items-center gap-3">
+              <div className="p-2 border border-rose-200 rounded-full bg-rose-50 text-rose-600">
+                <FiCheckCircle size={20} />
+              </div>
+              <span className="max-w-[80px]">100% Verified Profiles</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="p-2 border border-rose-200 rounded-full bg-rose-50 text-rose-600">
+                <FiHeart size={20} />
+              </div>
+              <span className="max-w-[80px]">Trusted by Thousands</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="p-2 border border-rose-200 rounded-full bg-rose-50 text-rose-600">
+                <FiLock size={20} />
+              </div>
+              <span className="max-w-[80px]">Privacy Assured</span>
+            </div>
+          </div>
         </div>
 
-        {/* Trust Badges */}
-        <div className="mt-24 flex flex-wrap justify-center gap-8 md:gap-16">
-          <div className="flex flex-col items-center">
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-md border-2 border-yellow-400">
-              <svg className="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-            </div>
-            <span className="font-bold text-rose-900">100% Verified Profiles</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-md border-2 border-yellow-400">
-              <svg className="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" /></svg>
-            </div>
-            <span className="font-bold text-rose-900">Trusted by Thousands</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-md border-2 border-yellow-400">
-              <svg className="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" /></svg>
-            </div>
-            <span className="font-bold text-rose-900">Privacy Assured</span>
+        {/* Right Side (Gradient / Background) */}
+        {/* We use a custom clip-path to create the beautiful curved intersection between white and maroon */}
+        <div className="hidden md:block w-7/12 absolute top-0 bottom-0 right-0 z-0 bg-gradient-to-br from-rose-700 via-rose-800 to-rose-950" style={{ clipPath: 'ellipse(70% 80% at 85% 50%)' }}>
+          {/* Decorative Pattern overlay */}
+          <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')] mix-blend-overlay"></div>
+          
+          <div className="absolute top-1/4 left-1/4 text-white text-3xl font-serif font-light leading-snug drop-shadow-lg opacity-90 max-w-sm">
+            Two hearts united, <br />
+            <span className="font-bold">A LOVE STORY BEGINS,</span> <br />
+            forever entwined
           </div>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-rose-950 text-rose-200 py-8 text-center text-sm border-t-4 border-yellow-500">
-        <p>&copy; {new Date().getFullYear()} Dhobi Matrimony. All rights reserved.</p>
-      </footer>
+      {/* Footer Banner */}
+      <div className="bg-rose-900 text-white flex flex-col md:flex-row items-center justify-between px-8 py-3 z-50 text-sm font-medium">
+        <div className="bg-white text-rose-900 px-4 py-1 rounded-full font-bold shadow mb-3 md:mb-0">
+          Free Register now
+        </div>
+        <div className="flex items-center gap-6">
+          <span>📞 +91 9959195396</span>
+          <a href="https://www.dhobimatrimony.com" className="hover:underline">www.dhobimatrimony.com</a>
+        </div>
+      </div>
     </div>
   );
 }
