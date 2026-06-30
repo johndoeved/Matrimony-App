@@ -18,7 +18,7 @@ export default function ProfileSetup() {
     religion: 'Hindu',
     caste: 'Dhobi',
     subcaste: '',
-    gothra: '',
+    rashi: '',
     haveDosh: 'No',
     education: '',
     occupation: '',
@@ -38,7 +38,6 @@ export default function ProfileSetup() {
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
     // Mock file upload: Just setting a dummy URL for now.
-    // In production, this would upload to S3 / Cloudinary and return the URL.
     if (e.target.files && e.target.files[0]) {
       const dummyUrl = `https://example.com/uploads/${e.target.files[0].name}`;
       if (field === 'photos') {
@@ -51,10 +50,24 @@ export default function ProfileSetup() {
   };
 
   const submitProfile = async () => {
+    if (!formData.dateOfBirth) {
+      alert("Please select your Date of Birth in Step 1 before submitting.");
+      setStep(1);
+      return;
+    }
+
     setLoading(true);
     try {
-      // In a real app, you would retrieve the logged-in user's ID from context/token
-      const userId = localStorage.getItem('userId') || '64d1f2e9a3b9c8d7e6f5a4b3'; 
+      let userId = '64d1f2e9a3b9c8d7e6f5a4b3';
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const jwtPayload = JSON.parse(atob(token.split('.')[1]));
+          userId = jwtPayload.sub || jwtPayload._id || userId;
+        } catch (e) {
+          console.error("Failed to decode token", e);
+        }
+      }
       
       const payload = {
         user: userId,
@@ -66,7 +79,7 @@ export default function ProfileSetup() {
         religion: formData.religion,
         caste: formData.caste,
         subcaste: formData.subcaste,
-        gothra: formData.gothra,
+        gothra: formData.rashi, // map rashi to gothra field in backend for now, or we can just send rashi
         haveDosh: formData.haveDosh,
         location: {
           country: formData.country,
@@ -96,7 +109,8 @@ export default function ProfileSetup() {
         alert("Profile submitted successfully! Pending Admin Approval.");
         router.push('/dashboard');
       } else {
-        alert("Failed to submit profile.");
+        const errorText = await res.text();
+        alert(`Failed to submit profile. ${errorText}`);
       }
     } catch (err) {
       console.error(err);
@@ -137,7 +151,7 @@ export default function ProfileSetup() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-                    <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:ring-[#a51a49] focus:border-[#a51a49] outline-none text-gray-900" />
+                    <input type="date" required name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:ring-[#a51a49] focus:border-[#a51a49] outline-none text-gray-900" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Height</label>
@@ -172,8 +186,8 @@ export default function ProfileSetup() {
                     <input type="text" name="subcaste" value={formData.subcaste} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg text-gray-900" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Gothra</label>
-                    <input type="text" name="gothra" value={formData.gothra} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg text-gray-900" />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Rashi</label>
+                    <input type="text" name="rashi" value={formData.rashi} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg text-gray-900" />
                   </div>
                 </div>
               </div>

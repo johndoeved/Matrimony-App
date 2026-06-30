@@ -10,15 +10,14 @@ export default function ContactPage() {
           We are here to help you on your journey to find your perfect partner.
         </p>
         <div className="bg-white p-8 rounded-xl shadow-sm border border-rose-100 w-full max-w-md text-left">
-          <div className="mb-4">
-            <span className="font-bold text-rose-900">Phone:</span> <span className="text-gray-700">+91 9959195396</span>
+          <div className="mb-4 flex flex-col">
+            <span className="font-bold text-rose-900 mb-1">📞 Phone / WhatsApp:</span> 
+            <span className="text-gray-700 font-medium">Ved Parmar: +91 6353606165</span>
+            <span className="text-gray-700 font-medium">Rohit Parmar: +91 9173446708</span>
           </div>
-          <div className="mb-4">
-            <span className="font-bold text-rose-900">Email:</span> <span className="text-gray-700">support@dhobimatrimony.com</span>
-          </div>
-          <div className="mb-4">
-            <span className="font-bold text-rose-900">Address:</span> <br/>
-            <span className="text-gray-700">Dhobi Matrimony Headquarters<br/>Mumbai, India</span>
+          <div className="mb-4 flex flex-col mt-4">
+            <span className="font-bold text-rose-900 mb-1">✉️ Email (For any query):</span> 
+            <span className="text-gray-700 font-medium">dhobi2230@gmail.com</span>
           </div>
         </div>
       </main>

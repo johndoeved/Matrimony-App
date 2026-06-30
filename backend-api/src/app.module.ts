@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+
+let mongod: MongoMemoryServer;
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -20,11 +23,19 @@ import { ProfilesModule } from './profiles/profiles.module';
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri:
-          configService.get<string>('MONGODB_URI') ||
-          'mongodb://127.0.0.1:27017/dhobimatrimony',
-      }),
+      useFactory: async (configService: ConfigService) => {
+        try {
+          if (!mongod) {
+            mongod = await MongoMemoryServer.create();
+          }
+          const uri = mongod.getUri();
+          console.log(`[Database] Using In-Memory MongoDB: ${uri}`);
+          return { uri };
+        } catch (error) {
+          console.error("Failed to start in-memory db", error);
+          return { uri: 'mongodb://127.0.0.1:27017/dhobimatrimony' };
+        }
+      },
       inject: [ConfigService],
     }),
     AuthModule,
