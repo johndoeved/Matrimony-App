@@ -23,17 +23,25 @@ export class AuthService {
     this.otpStore.set(emailOrPhone, otp);
 
     if (emailOrPhone.includes('@')) {
+      const smtpEmail = process.env.SMTP_EMAIL;
+      const smtpPassword = process.env.SMTP_PASSWORD;
+
+      if (!smtpEmail || !smtpPassword) {
+        console.warn('SMTP credentials are not configured; returning mock OTP flow.');
+        return { message: 'OTP generated (Mock Mode)' };
+      }
+
       // Send Email via Nodemailer
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: process.env.SMTP_EMAIL,
-          pass: process.env.SMTP_PASSWORD,
+          user: smtpEmail,
+          pass: smtpPassword,
         },
       });
 
       await transporter.sendMail({
-        from: `"Dhobi Matrimony" <${process.env.SMTP_EMAIL}>`,
+        from: `"Dhobi Matrimony" <${smtpEmail}>`,
         to: emailOrPhone,
         subject: 'Your Verification Code',
         text: `Your verification code is ${otp}`,

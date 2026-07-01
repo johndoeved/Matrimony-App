@@ -31,7 +31,7 @@ async function bootstrap() {
     console.log('Seeded default admin user: admin@dhobi.com / admin123');
   }
 
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 5000;
   await app.listen(port);
   console.log(`Application is running on port: ${port}`);
 }

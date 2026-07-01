@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import { MongoClient } from 'mongodb';
 
 let mongod: MongoMemoryServer;
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -25,10 +26,40 @@ import { ProfilesModule } from './profiles/profiles.module';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         const configuredUri = configService.get<string>('MONGODB_URI');
+        const localUri =
+          configService.get<string>('LOCAL_MONGODB_URI') ||
+          'mongodb://127.0.0.1:27017/dhobi_matrimony';
+
         if (configuredUri) {
-          console.log(`[Database] Using configured MongoDB URI`);
-          return { uri: configuredUri };
+          try {
+            const probeClient = new MongoClient(configuredUri, {
+              serverSelectionTimeoutMS: 3000,
+            });
+            await probeClient.connect();
+            await probeClient.close();
+            console.log(`[Database] Using configured MongoDB URI`);
+            return { uri: configuredUri };
+          } catch (error) {
+            console.warn(
+              `[Database] Configured MongoDB URI is unavailable, falling back to a local database.`,
+            );
+          }
         }
+
+        try {
+          const localProbeClient = new MongoClient(localUri, {
+            serverSelectionTimeoutMS: 3000,
+          });
+          await localProbeClient.connect();
+          await localProbeClient.close();
+          console.log(`[Database] Using local MongoDB URI`);
+          return { uri: localUri };
+        } catch (error) {
+          console.warn(
+            `[Database] Local MongoDB URI is unavailable, falling back to an in-memory database.`,
+          );
+        }
+
         try {
           if (!mongod) {
             mongod = await MongoMemoryServer.create();
