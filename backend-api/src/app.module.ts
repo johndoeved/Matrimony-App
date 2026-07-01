@@ -24,6 +24,11 @@ import { ProfilesModule } from './profiles/profiles.module';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
+        const configuredUri = configService.get<string>('MONGODB_URI');
+        if (configuredUri) {
+          console.log(`[Database] Using configured MongoDB URI`);
+          return { uri: configuredUri };
+        }
         try {
           if (!mongod) {
             mongod = await MongoMemoryServer.create();

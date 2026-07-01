@@ -33,6 +33,7 @@
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "firebase-admin": "^14.1.0",
+    "mongodb": "^7.4.0",
     "mongodb-memory-server": "^11.2.0",
     "mongoose": "^9.7.3",
     "nodemailer": "^9.0.3",
